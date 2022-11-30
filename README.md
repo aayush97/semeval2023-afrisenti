@@ -8,7 +8,8 @@ A low-resource sentiment analysis project for African Languages
 3. Activate the virtual environment using `source .venv/bin/activate` 
 4. Install the requirements `pip install -r requirements.txt`
 5. The following commandline options are available for training the model
-```Usage: python -m src.models.train_model [OPTIONS]
+```
+Usage: python -m src.models.train_model [OPTIONS]
 
 Options:
   --lang [am|dz|ha|ig|ma|pcm|pt|sw|yo]
