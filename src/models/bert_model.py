@@ -13,11 +13,13 @@ import evaluate
 from transformers import (
     AutoConfig,
     AutoModelForSequenceClassification,
+    AutoModelForPreTraining,
     AutoTokenizer,
     EvalPrediction,
     Trainer,
     TrainingArguments,
     default_data_collator,
+    DataCollatorForWholeWordMask,
     set_seed,
 )
 from transformers.trainer_utils import get_last_checkpoint
@@ -32,7 +34,7 @@ from sklearn.metrics import classification_report
 
 
 LEARNING_RATE = 5e-5
-EPOCHS=5
+EPOCHS=10
 MAX_SEQUENCE_LENGTH=128
 SEED=42
 
@@ -66,7 +68,7 @@ def finetune_sentiment_classifier(model_name, model_path, lang, data_dir):
     df = pd.read_csv(data_dir + '/test.tsv', sep='\t')
     df = df.dropna()
     predict_dataset = Dataset.from_pandas(df)
-    label_list = df['label'].unique().tolist()
+    label_list = ['positive', 'neutral', 'negative']
 
     # Labels
     num_labels = len(label_list)
@@ -159,6 +161,75 @@ def finetune_sentiment_classifier(model_name, model_path, lang, data_dir):
         trainer.log_metrics("eval", metrics)
         trainer.save_metrics("eval", metrics)
 
+
+def finetune_langauge_model(model_name, model_path, lang, data_dir):
+    output_dir = f"models/language_model/{lang}/{model_name}"
+    data_dir = f"data/raw/train/splitted-train-dev-test/{lang}"
+    training_args = TrainingArguments(output_dir=output_dir,
+                                      overwrite_output_dir=True,
+                                     do_train=True,
+                                     learning_rate=LEARNING_RATE,
+                                     num_train_epochs=EPOCHS,
+                                     save_steps=-1,
+                                     per_device_train_batch_size = 8)
+    # Set seed before initializing model.
+    set_seed(SEED)
+
+
+    df = pd.read_csv(data_dir + '/train.tsv', sep='\t')
+    df = df.dropna()
+    train_dataset = Dataset.from_pandas(df)
+
+    config = AutoConfig.from_pretrained(
+        model_path,
+    )
+    tokenizer = AutoTokenizer.from_pretrained(
+        model_path,
+    )
+    model = AutoModelForPreTraining.from_pretrained(
+        model_path,
+        config=config,
+    )
+
+    padding = "max_length"
+
+
+    def preprocess_function(examples):
+        texts =(examples['text'],)
+        result =  tokenizer(*texts, padding=padding, max_length=MAX_SEQUENCE_LENGTH, truncation=True)
+        return result
+
+    train_dataset = train_dataset.map(
+        preprocess_function,
+        batched=True,
+        load_from_cache_file=True,
+        desc="Running tokenizer on train dataset",
+    )
+
+    data_collator = DataCollatorForWholeWordMask(tokenizer=tokenizer)
+
+    trainer = Trainer(
+        model=model,
+        args=training_args,
+        train_dataset=train_dataset,
+        tokenizer=tokenizer,
+        data_collator=data_collator
+    )
+
+    # Training
+    if training_args.do_train:
+        checkpoint = None
+        if training_args.resume_from_checkpoint is not None:
+            checkpoint = training_args.resume_from_checkpoint
+        train_result = trainer.train(resume_from_checkpoint=checkpoint)
+        metrics = train_result.metrics
+        max_train_samples = (
+            len(train_dataset))
+        metrics["train_samples"] = min(max_train_samples, len(train_dataset))
+
+        trainer.save_model()  # Saves the tokenizer too for easy upload
+
+        trainer.save_state()
 
 def predict_sentiment(model, tokenizer, text):
     encoded_input = tokenizer(text, return_tensors='pt')

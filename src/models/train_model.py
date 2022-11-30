@@ -3,7 +3,7 @@ import click
 from src.models.linear_svc import train_SVM
 from src.models.naive_bayes import train_NB
 from src.models.utility import save_classifier_vectorizer
-from src.models.bert_model import finetune_sentiment_classifier
+from src.models.bert_model import finetune_sentiment_classifier, finetune_langauge_model
 
 
 
@@ -25,7 +25,8 @@ def main(lang, model, finetune_lm, finetune_classifier):
     if model=="naija-roberta-large":
         model_path = 'Davlan/naija-twitter-sentiment-afriberta-large'
         if finetune_lm:
-            model_path = None
+            finetune_langauge_model(model, model_path, lang, data_dir)
+            model_path = f"models/language_model/{lang}/{model}"
         if finetune_classifier:
             finetune_sentiment_classifier(model, model_path, lang, data_dir)
     if model=="xlm-roberta-small":
