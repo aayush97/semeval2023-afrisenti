@@ -7,7 +7,11 @@ A low-resource sentiment analysis project for African Languages
 2. Run the command `python -m venv .venv` to setup the virtual environment
 3. Activate the virtual environment using `source .venv/bin/activate` 
 4. Install the requirements `pip install -r requirements.txt`
-5. The following commandline options are available for training the model
+
+### Training the model
+
+The following commandline options are available for training the model
+
 ```
 Usage: python -m src.models.train_model [OPTIONS]
 
@@ -26,7 +30,10 @@ The `--finetune_lm` option will finetune the masked language model objective wit
 
 Example Usage: `python -m src.models.train_model --lang="pcm"  --model="naija-roberta-large" --finetune_classifier --finetune_lm`
 
-  6. The following commandline options are available for evaluating the model
+### Evaluating the model
+
+The following commandline options are available for evaluating the model
+
 
 ```
 Usage: python -m src.models.predict_model [OPTIONS]
