@@ -17,9 +17,8 @@ from src.models.utility import load_classifier_vectorizer
 @click.command()
 @click.option("--lang", type=click.Choice(["am", "dz", "ha", "ig", "ma", "pcm", "pt", "sw", "yo"], case_sensitive=False))
 @click.option("--model", type = click.Choice(["LinearSVM", "NaiveBayes", "naija-roberta-large", "xlm-roberta-small"]))
-@click.option("--finetune_lm", is_flag=True, default=False, help="Finetune the language model before running predictions")
 @click.option("--finetune_classifier", is_flag=True, default=False, help="Finetune classification layer")
-def main(lang, model, finetune_lm, finetune_classifier):
+def main(lang, model, finetune_classifier):
     print(f"Model: {model}, Language: {lang}")
     data_dir = Path(f'data/raw/train/splitted-train-dev-test/{lang}')
     test_tsv = Path(data_dir, 'test.tsv')
