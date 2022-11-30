@@ -1,0 +1,3 @@
+Flair model can be downloaded from :
+
+http://ltdata1.informatik.uni-hamburg.de/amharic/taskmodels/sent/final-model.pt
