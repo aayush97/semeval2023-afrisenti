@@ -205,56 +205,6 @@ def evaluate(file_path, dictionary, fsw=False, stopwords_file=None, pr='1', pred
 
 
 # =============================================================================
-def test():
-  print(':)')
-  # return str(['NEGATIVE'])
-  # a = {1:'a', 2:'b', 3:'c', 4:'d'}
-  # print(set(a.keys())) # {1, 2, 3, 4}
-  # a = {}
-  # print(a)
-  # print(set()=={})
-  # a = set()
-  # print(a=={})
-  # print(len(a) == 0)
-  # x = {"apple", "banana", "cherry"}
-  # y = {"google", "microsoft", "apple"}
-  # z = x.intersection(y) 
-  # print(z)
-  # print(list(z)[0])
-  # d1 = {"apple":1, "banana":2, "cherry":3}
-  # d2 = {"google":1, "microsoft":2, "apple":3}
-  # d1.pop(list(z)[0])
-  # print(d1)
-  # d2.pop(list(z)[0])
-  # print(d2)
-  # d3 = {**d1, **d2}
-  # print(d3)
-  # d5 = {"google":1, "microsoft":2, "a":3}
-  # d4 = d1.update(d5)
-  # print(d4)
-  # print(d1)
-  # print(combine_pos_neg_lexica(d1, d2))
-  # path1 = os.path.abspath("data/external/sentiment_lexicon/ig/igbo_negative.csv") 
-  # path2 = os.path.abspath("data/external/sentiment_lexicon/ig/igbo_positive.csv")
-  # df1 = lexica_df(path1)
-  # dict1 = lexica_dictionary(df1)
-  # dict1 = dictionary_processing(dict1)
-  # df2 = lexica_df(path2)
-  # dict2 = lexica_dictionary(df2)
-  # dict2 = dictionary_processing(dict2)
-  # print(len(combine_pos_neg_lexica(dict1, dict2)))
-  # for k,v in combine_pos_neg_lexica(dict1, dict2).items():
-  #   print(k, v, sep=',')
-  # d = combine_pos_neg_lexica(dict1, dict2)
-  # str = 'The queen 👑 has said it all !! Mercy Nwa Mara Mma anyi fu gi na anya❤ https://t.co/oblyK4NjMw'
-  # print(predict_by_lexica(d, str))
-  # str = 'Kee ka agadi ga emeghe onu waaaaa, na-ekwu tuu nnoo? Animal talk. Animal talk https://t.co/bO8HplNYvq'
-  # str = 'Happy Sunday ndi nkem December with grace... #shuga #Jesusdeysugarmybody @user Abakiliki,Ebonyi state https://t.co/p0696wKUvA'
-  # str = 'https://t.co/p0696wKUvA'
-  # print(preprocessing_review(str))
-
-
-
 def main():
   # get sentiment lexicons dictionaries paths
   path1 = os.path.abspath("data/external/sentiment_lexicon/ig/igbo_negative.csv") 
