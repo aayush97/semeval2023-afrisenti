@@ -32,7 +32,8 @@ def main(lang, model, finetune_lm, finetune_classifier):
     if model=="xlm-roberta-small":
         model_path = 'Davlan/afro-xlmr-small'
         if finetune_lm:
-            model_path = None
+            finetune_langauge_model(model, model_path, lang, data_dir)
+            model_path = f"models/language_model/{lang}/{model}"
         if finetune_classifier:
             finetune_sentiment_classifier(model, model_path, lang, data_dir)
         

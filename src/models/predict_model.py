@@ -35,6 +35,12 @@ def main(lang, model, finetune_classifier):
             print(evaluate_bert_model(model, model_dir, lang, test_tsv))
         else:
             print(evaluate_bert_model(model, model_path, lang, test_tsv))
+    if model=="xlm-roberta-small":
+        model_path = 'Davlan/afro-xlmr-small'
+        if finetune_classifier:
+            print(evaluate_bert_model(model, model_dir, lang, test_tsv))
+        else:
+            print(evaluate_bert_model(model, model_path, lang, test_tsv))
 
 
 
