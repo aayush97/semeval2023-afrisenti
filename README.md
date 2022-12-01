@@ -7,6 +7,7 @@ A low-resource sentiment analysis project for African Languages
 2. Run the command `python -m venv .venv` to setup the virtual environment
 3. Activate the virtual environment using `source .venv/bin/activate` 
 4. Install the requirements `pip install -r requirements.txt`
+5. To run lexicon-based sentiment analysis for Igbo language, go to "Lexicon-based SA for Igbo" section below
 
 ### Training the model
 
@@ -50,6 +51,10 @@ The `--model` option indicates which model to train.
 The `--finetune_classifier` will use the model finetuned on the training data. It is only applicable is the model is either `naija-roberta-large` or `xlm-roberta-small`. When `LinearSVC` or `NaiveBayes` is selected this option is ignored.
 
 Example Usage: `python -m src.models.predict_model --lang="pcm"  --model="naija-roberta-large" --finetune_classifier`
+
+### Lexicon-based SA for Igbo
+
+To do lexicon-based sentiment analysis for Igbo language, cd to semeval2023-afrisenti root folder in cmd, create a virtual environment and install necessary libraries like transformers, pandas, sklearn, and then type "py ig_lexicon_based_submit.py" and hit enter. The experiments will be run.
 
 Project Organization
 ------------
